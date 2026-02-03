@@ -8,7 +8,7 @@ const Footer = () => {
         <div>
             <img src={assets.logo}  className='mb-5 w-32'/>
             <p className='w-full md:w-2/3 text-gray-600'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex, consectetur quae. A ad odit nihil rerum at? Voluptate asperiores velit, quae accusamus adipisci ipsa ab numquam suscipit aspernatur quaerat maxime rerum assumenda quod sequi omnis qui! Nisi modi aliquam eveniet sit voluptatem temporibus necessitatibus, incidunt tenetur commodi libero aspernatur ipsum?
             </p>
         </div>
 
@@ -32,12 +32,11 @@ const Footer = () => {
             </ul>
         </div>
 
-        <div>
+        <div className='col-span-full'> 
             <hr />
             <p className='py-5 text-sm text-center'>
                 Copyright 2026@ forever.com - All Right Reserved.
             </p>
-
         </div>
     </div>
   )
