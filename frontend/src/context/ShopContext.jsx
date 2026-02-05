@@ -52,14 +52,38 @@ const ShopContextProvider = (props) => {
         return totalCount;
     }
 
+    const updateQuantity = async (itemId, size, quantity) => {
+        let cartData = structuredClone(cartItems);
 
+        cartData[itemId][size] = quantity;
+
+        setCartItems(cartData);
+    }
+
+    const getCartAmount = async  () => {
+        let totalAmount = 0;
+        for(const items in cartItems){
+            let itemInfo = products.find((product)=> product._id === items);
+            for(const item in cartItems[items]){
+                try{
+                    if(cartItems[items][item] > 0){
+                        totalAmount += itemInfo.price * cartItems[items][items];
+                    }
+                } catch (error) {
+                    console.error("Error calculating cart amount:", error);
+                }
+            }
+        }
+        return totalAmount;
+    }
 
 
     const value = {
         products, currency, delivery_fee, 
         search, setSearch, showSearch, setShowSearch,
         cartItems, setCartItems, addToCart,
-        getCartCount
+        getCartCount, updateQuantity,
+        getCartAmount
     }
 
     return (
