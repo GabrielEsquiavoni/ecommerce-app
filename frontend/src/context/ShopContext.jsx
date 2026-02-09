@@ -12,7 +12,7 @@ const ShopContextProvider = (props) => {
     const delivery_fee = 10;
     const [search, setSearch] = useState("");
     const [showSearch, setShowSearch] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState({});
     const navigate = useNavigate();
 
     const addToCart = async (itemId, size) => {
@@ -69,7 +69,7 @@ const ShopContextProvider = (props) => {
             for(const item in cartItems[items]){
                 try{
                     if(cartItems[items][item] > 0){
-                        totalAmount += itemInfo.price * cartItems[items][items];
+                        totalAmount += itemInfo.price * cartItems[items][item];
                     }
                 } catch (error) {
                     console.error("Error calculating cart amount:", error);
@@ -78,7 +78,6 @@ const ShopContextProvider = (props) => {
         }
         return totalAmount;
     }
-
 
     const value = {
         products, currency, delivery_fee, 
