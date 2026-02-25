@@ -1,5 +1,5 @@
-import orderModel from "../models/orderModel";
-import userModel from "../models/userModel";
+import orderModel from "../models/orderModel.js";
+import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 import razorpay from "razorpay";
 
@@ -151,6 +151,24 @@ const placeOrderRazorpay = async (req, res) => {
     }
 };
 
+const verifyRazorpay = async (req,res) => {
+  try {
+    const {userId, razorpay_order_id} = req.body
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
+
+    if (orderInfo.status === 'paid'){
+      await orderModel.findByIdAndUpdate(orderInfo.receipt,{payment:true});
+      await userModel.findByIdAndUpdate(userId,{cartData:{}})
+      res.json({success: true, message: "Payment sucesful"})
+    } else {
+      res.json({success: false, message: "Payment Failed"})
+    }
+  } catch (error) {
+    console.log(error)
+    res.json({success:false,message:error.message})
+  }
+}
+
 // All Orders data for Admin Panel
 const allOrders = async (req, res) => {
   try {
@@ -188,7 +206,8 @@ const updateStatus = async (req, res) => {
 };
 
 export {
-verifyStripe,
+  verifyRazorpay,
+  verifyStripe,
   placeOrder,
   placeOrderStripe,
   placeOrderRazorpay,
